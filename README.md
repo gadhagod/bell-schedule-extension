@@ -12,6 +12,7 @@ To be done:
 ## Installation
 1. Download this repo as a ZIP and unzip.
 2. Navigate to [chrome://extensions](chrome://extensions).
-3. Click <kbd>load unpacked</kbd> on the top left of the page.
-4. Select the unzipped extension folder.
-5. Optionally pin the extension for quick access.
+3. Activate developer mode from the top right of the screen.
+4. Click <kbd>load unpacked</kbd> on the top left of the page.
+5. Select the unzipped extension folder.
+6. Optionally pin the extension for quick access.
