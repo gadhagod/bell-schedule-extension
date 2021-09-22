@@ -12,7 +12,7 @@ How the extension looks as of now: \
 * No private data access
 
 ## Installation
-1. Download this repo as a ZIP and unzip.
+1. Download the [latest release](https://github.com/gadhagod/bell-schedule-extension/releases/latest) as a ZIP and unzip.
 2. Navigate to [chrome://extensions](chrome://extensions).
 3. Activate developer mode from the top right of the screen.
 4. Click <kbd>load unpacked</kbd> on the top left of the page.
