@@ -48,7 +48,7 @@ function loadSchedule() {
 
 function setToScheduleScreen() {
     document.body.style.width = "250px"
-    scheduleTable.style.display = "block";
+    scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
     backButton.style.display = "none";
@@ -136,4 +136,4 @@ backButton.addEventListener("click", function() {
 
 
 
-loadSchedule();
+setToScheduleScreen();
