@@ -52,9 +52,7 @@ function setToScheduleScreen() {
     settings.style.display = "block";
     settingsForm.style.display = "none";
     backButton.style.display = "none";
-    document.td.style.border = "1px solid black;";
-    document.th.style.border = "1px solid black;";
-    document.table.style.border = "1px solid black;";
+
     loadSchedule();
 }
 
