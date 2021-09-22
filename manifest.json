@@ -6,5 +6,8 @@
         "default_popup": "popup/index.html",
         "default_icon": "assets/icon.png"
     },
+    "permissions": [
+        "storage"
+    ],
     "manifest_version": 2
 }

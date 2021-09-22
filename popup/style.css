@@ -1,6 +1,18 @@
+#settingsForm {
+    display: none;
+}
+#back {
+    display: none;
+}
 body {
     width: 250px;
 }
 table, th, td {
     border: 1px solid black;
+}
+small.removeCustomPeriod {
+    color: red;
+}
+.nonPeriod {
+    color: blue;
 }
