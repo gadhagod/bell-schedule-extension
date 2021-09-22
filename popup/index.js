@@ -100,6 +100,7 @@ chrome.storage.local.get(["periodNames"], function(res) {
 
         let resetButton = document.getElementById(`P${periodNumber}ResetButton`);
         resetButton.addEventListener("click", function() {
+            document.getElementById(`P${periodNumber}`).value = "";
             document.getElementById(`P${periodNumber}`).setAttribute("placeholder", "");
             periodNames[`P${periodNumber}`] = null;
             chrome.storage.local.set(
