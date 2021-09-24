@@ -1,14 +1,41 @@
-var req = new XMLHttpRequest();
-let time = new Date();
-var header = document.getElementById("header");
-var scheduleTable = document.getElementById("schedule");
-var settings = document.getElementById("settings");
-var settingsForm = document.getElementById("settingsForm");
-var submitSettingsButton = document.getElementById("submitSettingsButton");
-var backButton = document.getElementById("back");
+const appDetails = chrome.app.getDetails();
+const repo = "gadhagod/bell-schedule-extension"
+
+const req = new XMLHttpRequest();
+const time = new Date();
+
+const header = document.getElementById("header");
+const scheduleTable = document.getElementById("schedule");
+const settings = document.getElementById("settings");
+const settingsForm = document.getElementById("settingsForm");
+const submitSettingsButton = document.getElementById("submitSettingsButton");
+const settingsBackButton = document.getElementById("settingsBackButton");
+const newReleaseBackButton = document.getElementById("newReleaseBackButton");
+const newReleaseButton = document.getElementById("newReleaseButton");
+const newReleaseText = document.getElementById("newReleaseText");
+const footer = document.getElementById("footer");
 
 /**
- * Replaces table items with parsed data from API request
+ * Checks if the version of the installed extension is that of the 
+ * latest release. If not, prompt the user to install the new version.
+ */
+function checkVersioning() {
+    let url = `https://api.github.com/repos/${repo}/releases/latest`; // GitHub releases API url
+    req.onreadystatechange = function() {
+        if(this.readyState === 4 && this.status === 200) { // if the request to GitHub's API is successful
+            let latestRelease = JSON.parse(this.responseText); // parse the response as an object
+            if (latestRelease.name !== appDetails.version) { // if the installed extension's version is not that of the latest release
+                newReleaseButton.style.display = "block"; // show the alert button in the settings screen
+            }
+        }
+    };
+    // send request
+    req.open("GET", url, true);
+    req.send();
+}
+
+/**
+ * Replaces table items with parsed data from API request.
  */
 function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
@@ -17,7 +44,7 @@ function loadSchedule() {
         let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate()}`; // url to be requested to
 
         req.onreadystatechange = function() {
-            if (this.readyState === 4 ) { // if response recieved
+            if (this.readyState === 4) { // if response recieved
                 if (this.status === 200) { // if request is successful
                     let res = JSON.parse(this.responseText); // convert response text to object
     
@@ -39,9 +66,9 @@ function loadSchedule() {
                         scheduleTable.appendChild(tr); // add the row to the table
                     });
                 } else if (this.status === 404) { // if no schedule for the day
-                    document.write("No schedule for today"); // tell the user by writing to page
+                    document.write("No schedule for today"); // tell the user by writing to screen
                 } else { // if another kind of error occurred
-                    document.write("An error occured"); // tell the user by writing to page
+                    document.write("An error occured"); // tell the user by writing to screen
                 }
             }
         };
@@ -52,35 +79,79 @@ function loadSchedule() {
 }
 
 /**
- * Sets the extension to the schedule screen by hiding and showing
- * elements and changing popup size, and then loads the schedule 
- * with `loadSchedule()`
+ * Changes the popup to the schedule screen by hiding and showing
+ * elements and changing popup size, and then loads the schedule with
+ * `loadSchedule()`.
  */
 function setToScheduleScreen() {
     document.body.style.width = "250px"
     scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
-    backButton.style.display = "none";
+    settingsBackButton.style.display = "none";
+    newReleaseButton.style.display = "none";
+    newReleaseText.style.display = "none";
+    newReleaseBackButton.style.display = "none";
+    footer.style.display = "none";
 
     loadSchedule();
 }
 
 /**
- * Sets the extension to the settings screen by hiding and showing
- * elements and changing popup size
+ * Changes the popup to the settings screen by hiding and showing elements 
+ * and changing popup size. If the extension's version is not up-to-date,
+ * it shows an alert button on the top right of the settings screen
+ * with `checkVersioning()`.
  */
 function setToSettingsScreen() {
     document.body.style.width = "210px"
     scheduleTable.style.display = "none";
     settings.style.display = "none";
+    newReleaseText.style.display = "none";
     settingsForm.style.display = "block";
-    backButton.style.display = "block";
+    settingsBackButton.style.display = "block";
     header.innerHTML = "Settings";
+    newReleaseBackButton.style.display = "none";
+    footer.style.display = "block";
+
+    checkVersioning();
 }
 
 /**
- * Converts an ISO time to the 12 hour clock
+ * Changes the popup to the 'new version' page, by hiding and showing
+ * elements and changing popup size. This screen contains information 
+ * about the new release.
+ */
+function setToNewVersionScreen() {
+    document.body.style.width = "300px";
+    scheduleTable.style.display = "none";
+    settings.style.display = "none";
+    settingsForm.style.display = "none";
+    newReleaseText.style.display = "block";
+    newReleaseBackButton.style.display = "block";
+    settingsBackButton.style.display = "none";
+    newReleaseButton.style.display = "none";
+    header.innerHTML = "New Version Available";
+
+    let url = `https://api.github.com/repos/${repo}/releases/latest`; // GitHub releases API url
+    req.onreadystatechange = function() {
+        if(this.readyState === 4 && this.status === 200) { // if the request to GitHub's API is successful
+            let latestRelease = JSON.parse(this.responseText); // parse the response text to an object
+            newReleaseText.innerHTML = `A new version of the bell schedule extension is available. <br><br>
+<u><sub>Published on ${parseDate(latestRelease.published_at)}</sub></u><br>
+<b>v${latestRelease.name} notes: <br>
+${latestRelease.body}</b> <br><br>
+Please remove this extension that re-install from <b><a href="https://github.com/${repo}/releases/latest" target="_blank">here</a></b>. <br><br>
+<small>NOTE: Updating extensions is highly recommended, as new features and fixes are implimemented.</small>`; // Tell the user info on the new version
+        }
+    };
+    // send request
+    req.open("GET", url, true);
+    req.send();
+}
+
+/**
+ * Converts an ISO time string to the 12 hour clock.
  * @param {string} ISOTime Time string to be converted
  * @return {string} Converted string
  */
@@ -89,12 +160,17 @@ function parseTime(ISOTime) {
     if (str.substring(0, 1) === "0"){
         str = str.substring(1);
     }
-
     if (parseInt(str.substring(0, 2)) > 12) {
         str = str.replace(str.substring(0, 2), (parseInt(str.substring(0, 2)) - 12).toString());
     }
-
     return str;
+}
+
+/**
+ * Converts an ISO date time string to YYYY-MM-DD format.
+ */
+ function parseDate(ISODateTime) {
+    return ISODateTime.substring(0, 10)
 }
 
 // create an array of period names to be used throughout the program
@@ -133,9 +209,6 @@ chrome.storage.local.get(["periodNames"], function(res) { // get period names fr
     })
 })
 
-settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, toggle to the settings screen
-backButton.addEventListener("click", setToScheduleScreen) // when the back button (from the settings screen) is pressed, toggle to the schedule screen
-
 submitSettingsButton.addEventListener("click", function() { // when the 'save' button is pressed in the settings screen
     chrome.storage.local.get(["periodNames"], function(res) { // retrieve the custom period names from storage
         let periodNames = res.periodNames;
@@ -149,5 +222,10 @@ submitSettingsButton.addEventListener("click", function() { // when the 'save' b
         setToScheduleScreen(); // return to the schedule screen
     })
 });
+
+newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the 'new release' button (from the settings screen) is pressed, change to the 'new release' screen
+settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, change to the settings screen
+settingsBackButton.addEventListener("click", setToScheduleScreen); // when the back button (from the settings screen) is pressed, change to the schedule screen
+newReleaseBackButton.addEventListener("click", setToSettingsScreen);
 
 setToScheduleScreen(); // start with the schedule screen activated
