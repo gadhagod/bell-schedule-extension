@@ -47,6 +47,11 @@ function loadSchedule() {
             if (this.readyState === 4) { // if response recieved
                 if (this.status === 200) { // if request is successful
                     let res = JSON.parse(this.responseText); // convert response text to object
+
+                    if(!res.schedule[0] || res.schedule[0].name === "No School") {
+                        document.write("No schedule for today");
+                        return;
+                    }
     
                     header.innerHTML = `Today's Schedule: ${res.code}`; // set header of page
     
