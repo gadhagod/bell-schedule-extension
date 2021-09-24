@@ -18,10 +18,3 @@ How the extension looks as of now: \
 4. Click <kbd>load unpacked</kbd> on the top left of the page.
 5. Select the unzipped extension folder.
 6. Optionally pin the extension for quick access.
-
-***
-
-To be done:
-* Add time left in current period.
-* Make days where there are no schedule visually pleasing.
-* Notify users when a new version is released.
