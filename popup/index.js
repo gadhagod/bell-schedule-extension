@@ -3,6 +3,7 @@ const repo = "gadhagod/bell-schedule-extension"
 
 const req = new XMLHttpRequest();
 const time = new Date();
+const markdownConverter = new showdown.Converter();
 
 const header = document.getElementById("header");
 const scheduleTable = document.getElementById("schedule");
@@ -142,11 +143,11 @@ function setToNewVersionScreen() {
     req.onreadystatechange = function() {
         if(this.readyState === 4 && this.status === 200) { // if the request to GitHub's API is successful
             let latestRelease = JSON.parse(this.responseText); // parse the response text to an object
+            let latestReleaseNotes = markdownConverter.makeHtml(latestRelease.body) // convert the release notes from mardown to HTML
             newReleaseText.innerHTML = `A new version of the bell schedule extension is available. <br><br>
-<u><sub>Published on ${parseDate(latestRelease.published_at)}</sub></u><br>
-<b>v${latestRelease.name} notes: <br>
-${latestRelease.body}</b> <br><br>
-Please remove this extension that re-install from <b><a href="https://github.com/${repo}/releases/latest" target="_blank">here</a></b>. <br><br>
+<u>Published on ${parseDate(latestRelease.published_at)}</u>
+<b><span style="color: blue">${latestReleaseNotes}</span></b>
+Please remove this extension and install <b>v${latestRelease.name}</b> from <a href="https://github.com/${repo}/releases/latest" target="_blank">here</a>. <br><br>
 <small>NOTE: Updating extensions is highly recommended, as new features and fixes are implimemented.</small>`; // Tell the user info on the new version
         }
     };
