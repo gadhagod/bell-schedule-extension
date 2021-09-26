@@ -1,5 +1,8 @@
 const appDetails = chrome.app.getDetails();
-const repo = "gadhagod/bell-schedule-extension"
+const repo = "gadhagod/bell-schedule-extension";
+if(appDetails.development) { // if extension not in production mode (check development.md)
+    const dayOffset = appDetails.development.day_offset; // check day offset
+}
 
 const req = new XMLHttpRequest();
 const time = new Date();
@@ -42,7 +45,7 @@ function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames;
-        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate()}`; // url to be requested to
+        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset ?? 0}`; // url to be requested to
 
         req.onreadystatechange = function() {
             if (this.readyState === 4) { // if response recieved
@@ -90,7 +93,7 @@ function loadSchedule() {
  * `loadSchedule()`.
  */
 function setToScheduleScreen() {
-    document.body.style.width = "250px"
+    document.body.style.width = "250px";
     scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
@@ -146,7 +149,7 @@ function setToNewVersionScreen() {
             let latestReleaseNotes = markdownConverter.makeHtml(latestRelease.body) // convert the release notes from mardown to HTML
             newReleaseText.innerHTML = `A new version of the bell schedule extension is available. <br><br>
 <u>Published on ${parseDate(latestRelease.published_at)}</u>
-<b><span style="color: blue">${latestReleaseNotes}</span></b>
+<b>${latestReleaseNotes}</b>
 Please remove this extension and install <b>v${latestRelease.name}</b> from <a href="https://github.com/${repo}/releases/latest" target="_blank">here</a>. <br><br>
 <small>NOTE: Updating extensions is highly recommended, as new features and fixes are implimemented.</small>`; // Tell the user info on the new version
         }
