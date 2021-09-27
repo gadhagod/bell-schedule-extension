@@ -1,11 +1,14 @@
 const appDetails = chrome.app.getDetails();
 const repo = "gadhagod/bell-schedule-extension";
+
+var dayOffset = 0;
 if(appDetails.development) { // if extension not in production mode (check development.md)
-    const dayOffset = appDetails.development.day_offset; // check day offset
+    dayOffset = appDetails.development.day_offset ?? 0; // check day offset
 }
 
 const req = new XMLHttpRequest();
 const time = new Date();
+// eslint-disable-next-line no-undef
 const markdownConverter = new showdown.Converter();
 
 const header = document.getElementById("header");
@@ -45,7 +48,7 @@ function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames;
-        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset ?? 0}`; // url to be requested to
+        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset}`; // url to be requested to
 
         req.onreadystatechange = function() {
             if (this.readyState === 4) { // if response recieved
@@ -113,7 +116,7 @@ function setToScheduleScreen() {
  * with `checkVersioning()`.
  */
 function setToSettingsScreen() {
-    document.body.style.width = "210px"
+    document.body.style.width = "210px";
     scheduleTable.style.display = "none";
     settings.style.display = "none";
     newReleaseText.style.display = "none";
@@ -146,7 +149,7 @@ function setToNewVersionScreen() {
     req.onreadystatechange = function() {
         if(this.readyState === 4 && this.status === 200) { // if the request to GitHub's API is successful
             let latestRelease = JSON.parse(this.responseText); // parse the response text to an object
-            let latestReleaseNotes = markdownConverter.makeHtml(latestRelease.body) // convert the release notes from mardown to HTML
+            let latestReleaseNotes = markdownConverter.makeHtml(latestRelease.body); // convert the release notes from mardown to HTML
             newReleaseText.innerHTML = `A new version of the bell schedule extension is available. <br><br>
 <u>Published on ${parseDate(latestRelease.published_at)}</u>
 <b>${latestReleaseNotes}</b>
@@ -178,13 +181,13 @@ function parseTime(ISOTime) {
 /**
  * Converts an ISO date time string to YYYY-MM-DD format.
  */
- function parseDate(ISODateTime) {
-    return ISODateTime.substring(0, 10)
+function parseDate(ISODateTime) {
+    return ISODateTime.substring(0, 10);
 }
 
 // create an array of period names to be used throughout the program
 var periodStrings = []; // initialize array
-for(i = 1; i <= 7; i++) {
+for(let i = 1; i <= 7; i++) {
     periodStrings[i-1] = `P${i}`; // set the element of periodStrings to the period string
 }
 
@@ -201,7 +204,7 @@ chrome.storage.local.get(["periodNames"], function(res) { // get period names fr
                 P6: null,
                 P7: null
             }
-        })
+        });
     }
 
     periodStrings.forEach(function(periodNumber) { // for each period
@@ -214,9 +217,9 @@ chrome.storage.local.get(["periodNames"], function(res) { // get period names fr
             document.getElementById(periodNumber).setAttribute("placeholder", ""); // clear the custom period box's placeholder
             periodNames[periodNumber] = null; // set the local stored period name to null
             chrome.storage.local.set({ periodNames: periodNames }); // push the local period names to storage
-        })
-    })
-})
+        });
+    });
+});
 
 submitSettingsButton.addEventListener("click", function() { // when the 'save' button is pressed in the settings screen
     chrome.storage.local.get(["periodNames"], function(res) { // retrieve the custom period names from storage
@@ -227,9 +230,9 @@ submitSettingsButton.addEventListener("click", function() { // when the 'save' b
                 periodNames[periodNumber] = document.getElementById(periodNumber).value; // update the local custom period names to contain the new name(s)
                 chrome.storage.local.set({ periodNames: periodNames }); // store the new period name(s)
             }
-        })
+        });
         setToScheduleScreen(); // return to the schedule screen
-    })
+    });
 });
 
 newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the 'new release' button (from the settings screen) is pressed, change to the 'new release' screen

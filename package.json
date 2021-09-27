@@ -1,0 +1,23 @@
+{
+  "name": "bell-schedule-extension",
+  "version": "2.1.0",
+  "description": "A tiny chrome extension that shows you your day's schedule.",
+  "main": "popup/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gadhagod/bell-schedule-extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gadhagod/bell-schedule-extension/issues"
+  },
+  "homepage": "https://github.com/gadhagod/bell-schedule-extension#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}
