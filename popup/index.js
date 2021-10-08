@@ -12,7 +12,7 @@ const time = new Date();
 const markdownConverter = new showdown.Converter();
 
 const header = document.getElementById("header");
-const scheduleTable = document.getElementById("schedule");
+var scheduleTable = document.getElementById("schedule");
 const settings = document.getElementById("settings");
 const settingsForm = document.getElementById("settingsForm");
 const submitSettingsButton = document.getElementById("submitSettingsButton");
@@ -56,7 +56,7 @@ function loadSchedule() {
                     let res = JSON.parse(this.responseText); // convert response text to object
 
                     if(!res.schedule[0] || res.schedule[0].name === "No School") {
-                        document.write("No schedule for today");
+                        scheduleTable.parentNode.replaceChild(document.createElement("p", "Hi"), scheduleTable);
                         return;
                     }
     
@@ -78,7 +78,9 @@ function loadSchedule() {
                         scheduleTable.appendChild(tr); // add the row to the table
                     });
                 } else if (this.status === 404) { // if no schedule for the day
-                    document.write("No schedule for today"); // tell the user by writing to screen
+                    scheduleTable.setAttribute("style", "border:none;");
+                    scheduleTable.innerHTML = "No schedule for today";
+                    //scheduleTable = newScheduleTable;
                 } else { // if another kind of error occurred
                     document.write("An error occured"); // tell the user by writing to screen
                 }
@@ -96,6 +98,7 @@ function loadSchedule() {
  * `loadSchedule()`.
  */
 function setToScheduleScreen() {
+    header.innerHTML = "";
     document.body.style.width = "250px";
     scheduleTable.style.display = "";
     settings.style.display = "block";
