@@ -78,8 +78,8 @@ function loadSchedule() {
                         scheduleTable.appendChild(tr); // add the row to the table
                     });
                 } else if (this.status === 404) { // if no schedule for the day
-                    scheduleTable.setAttribute("style", "border:none;");
-                    scheduleTable.innerHTML = "No schedule for today";
+                    scheduleTable.setAttribute("style", "border:none;"); // remove border from table
+                    scheduleTable.innerHTML = "No schedule for today"; // set the schedule table's HTML
                     //scheduleTable = newScheduleTable;
                 } else { // if another kind of error occurred
                     document.write("An error occured"); // tell the user by writing to screen
