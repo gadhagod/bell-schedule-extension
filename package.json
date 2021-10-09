@@ -1,7 +1,7 @@
 {
   "name": "bell-schedule-extension",
   "version": "2.1.2",
-  "description": "A tiny chrome extension that shows you your day's schedule.",
+  "description": "View a Harker bell schedule popup conveniently from Chrome",
   "main": "popup/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
