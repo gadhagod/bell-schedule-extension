@@ -1,6 +1,6 @@
 {
   "name": "bell-schedule-extension",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "A tiny chrome extension that shows you your day's schedule.",
   "main": "popup/index.html",
   "scripts": {
