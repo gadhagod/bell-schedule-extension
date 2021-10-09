@@ -8,6 +8,9 @@ table, th, td {
 small.removeCustomPeriod {
     color: red;
 }
+.startHidden {
+    display: none;
+}
 .nonPeriod {
     color: blue;
 }

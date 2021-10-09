@@ -12,7 +12,7 @@ const time = new Date();
 const markdownConverter = new showdown.Converter();
 
 const header = document.getElementById("header");
-var scheduleTable = document.getElementById("schedule");
+const scheduleTable = document.getElementById("schedule");
 const settings = document.getElementById("settings");
 const settingsForm = document.getElementById("settingsForm");
 const submitSettingsButton = document.getElementById("submitSettingsButton");
@@ -60,7 +60,7 @@ function loadSchedule() {
                         return;
                     }
     
-                    header.innerHTML = `Today's Schedule: ${res.code}`; // set header of page
+                    header.innerHTML = `${res.code} Schedule`; // set header of page
     
                     res.schedule.forEach(period => { // for each period in the API response
                         let tr = document.createElement("tr"); // create empty table row
@@ -80,7 +80,6 @@ function loadSchedule() {
                 } else if (this.status === 404) { // if no schedule for the day
                     scheduleTable.setAttribute("style", "border:none;"); // remove border from table
                     scheduleTable.innerHTML = "No schedule for today"; // set the schedule table's HTML
-                    //scheduleTable = newScheduleTable;
                 } else { // if another kind of error occurred
                     document.write("An error occured"); // tell the user by writing to screen
                 }
@@ -98,8 +97,8 @@ function loadSchedule() {
  * `loadSchedule()`.
  */
 function setToScheduleScreen() {
-    header.innerHTML = "";
     document.body.style.width = "250px";
+    document.body.style.height = "140px";
     scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
@@ -108,7 +107,9 @@ function setToScheduleScreen() {
     newReleaseText.style.display = "none";
     newReleaseBackButton.style.display = "none";
     footer.style.display = "none";
-
+    header.innerHTML = "";
+    scheduleTable.style.display = "";
+    settings.style.display = "block";
     loadSchedule();
 }
 
