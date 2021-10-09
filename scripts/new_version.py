@@ -2,7 +2,7 @@
 from json import dump, loads, dumps
 from os.path import join
 from pathlib import Path
-from sys import argv, version
+from sys import argv
 import utils
 
 extension_path = Path(__file__).parent.resolve().parent.resolve()
