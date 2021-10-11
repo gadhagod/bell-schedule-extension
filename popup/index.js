@@ -23,6 +23,16 @@ const newReleaseText = document.getElementById("newReleaseText");
 const footer = document.getElementById("footer");
 
 /**
+ * Converts a given string to title case
+ * @param {string} str String to be converted
+ */
+function toTitleCase(str) {
+    return !str ? null : str.toLowerCase().split(" ").map(function(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(" ");
+}
+
+/**
  * Checks if the version of the installed extension is that of the 
  * latest release. If not, prompt the user to install the new version.
  */
@@ -60,7 +70,7 @@ function loadSchedule() {
                         return;
                     }
     
-                    header.innerHTML = `${res.code} Schedule`; // set header of page
+                    header.innerHTML = `${(toTitleCase(res.variant) ?? "") + " "}${res.code} Schedule`; // set header of page
     
                     res.schedule.forEach(period => { // for each period in the API response
                         let tr = document.createElement("tr"); // create empty table row
@@ -68,7 +78,7 @@ function loadSchedule() {
     
                         // set the table data to custom period name or API's default period name 
                         // followed by times
-                        td.innerHTML = `<center><b>${ periodNames[period.name] ?? period.name }</b>
+                        td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>
             ${parseTime(period.start)} - ${parseTime(period.end)}</center>`;
                         if(periodStrings.includes(period.name)) { // if it's not a period (e.g. "lunch")
                             td.setAttribute("class", "nonPeriod"); // set `class` to `nonPeriod` for seperate styling
