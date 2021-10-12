@@ -111,7 +111,6 @@ function loadSchedule() {
 function setToScheduleScreen() {
     loader.style.display = "block";
     document.body.style.width = "250px";
-    document.body.style.height = "140px";
     scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
