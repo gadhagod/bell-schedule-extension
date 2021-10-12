@@ -14,3 +14,15 @@ small.removeCustomPeriod {
 .nonPeriod {
     color: blue;
 }
+#loader {
+    border: 16px solid rgba(0, 0, 0, 0.061);
+    border-top: 16px solid blue;
+    border-radius: 30%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

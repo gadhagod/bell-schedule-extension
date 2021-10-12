@@ -21,6 +21,7 @@ const newReleaseBackButton = document.getElementById("newReleaseBackButton");
 const newReleaseButton = document.getElementById("newReleaseButton");
 const newReleaseText = document.getElementById("newReleaseText");
 const footer = document.getElementById("footer");
+const loader = document.getElementById("loader");
 
 /**
  * Converts a given string to title case
@@ -93,6 +94,7 @@ function loadSchedule() {
                 } else { // if another kind of error occurred
                     document.write("An error occured"); // tell the user by writing to screen
                 }
+                loader.style.display = "none"; // hide the loader
             }
         };
         // send request
@@ -107,6 +109,7 @@ function loadSchedule() {
  * `loadSchedule()`.
  */
 function setToScheduleScreen() {
+    loader.style.display = "block";
     document.body.style.width = "250px";
     document.body.style.height = "140px";
     scheduleTable.style.display = "";
@@ -139,7 +142,6 @@ function setToSettingsScreen() {
     header.innerHTML = "Settings";
     newReleaseBackButton.style.display = "none";
     footer.style.display = "block";
-
     checkVersioning();
 }
 
