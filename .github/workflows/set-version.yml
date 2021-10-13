@@ -1,0 +1,29 @@
+name: Set Version
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: "Version number of new release"
+        default: 1.0.0
+
+jobs: 
+  main:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.6'
+    - name: Add version to config files
+      run: python3 scripts/new_version.py ${{ github.event.inputs.version }}
+    - name: Commit modified config files
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        git commit -m "Set version to ${{ github.event.inputs.version }}"
+    - name: Push motified config files
+      uses: ad-m/github-push-action@master
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
