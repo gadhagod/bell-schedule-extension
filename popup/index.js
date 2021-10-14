@@ -24,8 +24,25 @@ const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
 
 /**
+ * Returns a copy of `emptyPeriodNames`
+ * @returns {{P1: null, P2: null, P3: null, P4: null, P5: null, P6: null, P7: null}}
+ */
+function getEmptyPeriodNames() {
+    return Object.assign({
+        P1: null,
+        P2: null,
+        P3: null,
+        P4: null,
+        P5: null,
+        P6: null,
+        P7: null
+    });
+}
+
+/**
  * Converts a given string to title case
  * @param {string} str String to be converted
+ * @return {string}
  */
 function toTitleCase(str) {
     return !str ? null : str.toLowerCase().split(" ").map(function(word) {
@@ -58,7 +75,7 @@ function checkVersioning() {
 function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
-        let periodNames = res.periodNames;
+        let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
         let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset}`; // url to be requested to
 
         req.onreadystatechange = function() {
@@ -201,7 +218,7 @@ function parseDate(ISODateTime) {
 }
 
 // create an array of period names to be used throughout the program
-var periodStrings = []; // initialize array
+var periodStrings = []; // initialize period strings array
 for(let i = 1; i <= 7; i++) {
     periodStrings[i-1] = `P${i}`; // set the element of periodStrings to the period string
 }
@@ -209,17 +226,8 @@ for(let i = 1; i <= 7; i++) {
 chrome.storage.local.get(["periodNames"], function(res) { // get period names from storage
     let periodNames = res.periodNames;
     if(!periodNames) { // if period names are not in storage (probably the first time opening the extension)
-        chrome.storage.local.set({ // store the period names as nulls
-            periodNames: {
-                P1: null,
-                P2: null,
-                P3: null,
-                P4: null,
-                P5: null,
-                P6: null,
-                P7: null
-            }
-        });
+        periodNames = getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
+        chrome.storage.local.set(periodNames); // store the period names object
     }
 
     periodStrings.forEach(function(periodNumber) { // for each period
@@ -238,7 +246,7 @@ chrome.storage.local.get(["periodNames"], function(res) { // get period names fr
 
 submitSettingsButton.addEventListener("click", function() { // when the 'save' button is pressed in the settings screen
     chrome.storage.local.get(["periodNames"], function(res) { // retrieve the custom period names from storage
-        let periodNames = res.periodNames;
+        let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
         periodStrings.forEach(function(periodNumber) { // for each period
             let setClass = document.getElementById(periodNumber).value; // get value of the period's custom name textbox
             if(setClass) { // if a value is in the textbox (meaning the user wants to set a custom period name(s))
