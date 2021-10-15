@@ -89,14 +89,13 @@ function loadSchedule() {
                         return;
                     }
     
-                    header.innerHTML += `<br>${(toTitleCase(res.variant) ?? "") + " "}${res.code} Schedule`; // add letter to header
+                    header.innerHTML += `<br><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule`; // add letter to header
     
                     res.schedule.forEach(period => { // for each period in the API response
                         let tr = document.createElement("tr"); // create empty table row
                         let td = document.createElement("td"); // create empty table data
     
-                        // set the table data to custom period name or API's default period name 
-                        // followed by times
+                        // set the table data to custom period name or API's default period name followed by times
                         td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>
             ${parseTime(period.start)} - ${parseTime(period.end)}</center>`;
                         if(periodStrings.includes(period.name)) { // if it's not a period (e.g. "lunch")
