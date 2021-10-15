@@ -85,7 +85,7 @@ function loadSchedule() {
                     let res = JSON.parse(this.responseText); // convert response text to object
 
                     if(!res.schedule[0] || res.schedule[0].name === "No School") {
-                        scheduleTable.parentNode.replaceChild(document.createElement("p", "Hi"), scheduleTable);
+                        scheduleTable.innerHTML = "No schedule for today"; // set the schedule table's HTML to reflect absence of schedule
                         return;
                     }
     
