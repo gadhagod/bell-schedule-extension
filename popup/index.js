@@ -89,7 +89,7 @@ function loadSchedule() {
                         return;
                     }
     
-                    header.innerHTML += `<br><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule`; // add letter to header
+                    header.innerHTML += `<br><small><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule</small>`; // add letter to header
     
                     res.schedule.forEach(period => { // for each period in the API response
                         let tr = document.createElement("tr"); // create empty table row
