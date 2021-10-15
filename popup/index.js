@@ -74,6 +74,7 @@ function checkVersioning() {
  */
 function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
+    header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate() + dayOffset}`; // set header of page to have weekday and date
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
         let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset}`; // url to be requested to
@@ -88,7 +89,7 @@ function loadSchedule() {
                         return;
                     }
     
-                    header.innerHTML = `${(toTitleCase(res.variant) ?? "") + " "}${res.code} Schedule`; // set header of page
+                    header.innerHTML += `<br>${(toTitleCase(res.variant) ?? "") + " "}${res.code} Schedule`; // add letter to header
     
                     res.schedule.forEach(period => { // for each period in the API response
                         let tr = document.createElement("tr"); // create empty table row
@@ -139,6 +140,7 @@ function setToScheduleScreen() {
     header.innerHTML = "";
     scheduleTable.style.display = "";
     settings.style.display = "block";
+    scheduleTable.setAttribute("style", ""); // add border to table
     loadSchedule();
 }
 
@@ -212,9 +214,20 @@ function parseTime(ISOTime) {
 
 /**
  * Converts an ISO date time string to YYYY-MM-DD format.
+ * @param {string} ISODateTime
+ * @return {string}
  */
 function parseDate(ISODateTime) {
     return ISODateTime.substring(0, 10);
+}
+
+/**
+ * Converts an int from 0 - 7 to the respective weekday, starting from Sunday representing 0
+ * @param { 0 | 1 | 2 | 3 | 4 | 5 | 6} dayNumber
+ * @returns {"Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"}
+ */
+function parseWeekday(dayNumber) {
+    return ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"][dayNumber];
 }
 
 // create an array of period names to be used throughout the program
@@ -262,5 +275,16 @@ newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the '
 settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, change to the settings screen
 settingsBackButton.addEventListener("click", setToScheduleScreen); // when the back button (from the settings screen) is pressed, change to the schedule screen
 newReleaseBackButton.addEventListener("click", setToSettingsScreen);
+
+document.onkeydown = function(event) {
+    if(event.keyCode === 38 || event.keyCode === 39) {
+        time.setDate(time.getDate() + 1);
+    } else if (event.keyCode === 37 || event.keyCode === 40) {
+        time.setDate(time.getDate() - 1);
+    } else {
+        return;
+    }
+    setToScheduleScreen();
+};
 
 setToScheduleScreen(); // start with the schedule screen activated
