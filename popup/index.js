@@ -85,7 +85,7 @@ function loadSchedule() {
                     let res = JSON.parse(this.responseText); // convert response text to object
 
                     if(!res.schedule[0] || res.schedule[0].name === "No School") {
-                        scheduleTable.innerHTML = "No schedule for today"; // set the schedule table's HTML to reflect absence of schedule
+                        scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML to reflect absence of schedule
                         return;
                     }
     
@@ -107,7 +107,7 @@ function loadSchedule() {
                     });
                 } else if (this.status === 404) { // if no schedule for the day
                     scheduleTable.setAttribute("style", "border:none;"); // remove border from table
-                    scheduleTable.innerHTML = "No schedule for today"; // set the schedule table's HTML
+                    scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML
                 } else { // if another kind of error occurred
                     document.write("An error occured"); // tell the user by writing to screen
                 }
