@@ -35,6 +35,6 @@
 
 Release notes can be found [https://github.com/gadhagod/bell-schedule-extension/releases](here). From here, you can also download a version's ZIP file.
 
-<img src="../docs/img/src-code.png" style="border: 5px solid #555" length="42%" width="42%">
+<img src="docs/img/src-code.png" style="border: 5px solid #555" length="42%" width="42%">
 
 <p id="release_notes">Latest release: </p>

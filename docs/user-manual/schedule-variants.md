@@ -6,7 +6,7 @@ Special schedules have major changes to its block's conventional schedule, such 
 
 <center>
 <figure class="figure">
-        <img src="../docs/user-manual/img/schedule-variants/special.png">
+        <img src="docs/user-manual/img/schedule-variants/special.png">
         <figcaption class="figure-caption text-center">This schedule is marked as "special" for P5's inclusion</figcaption>
     </figure>
 </center>
@@ -16,7 +16,7 @@ Adjusted schedules have minor changes, such as an insersion of time alloted to s
 
 <center>
     <figure class="figure">
-        <img src="../docs/user-manual/img/schedule-variants/adjusted.png">
+        <img src="docs/user-manual/img/schedule-variants/adjusted.png">
         <figcaption class="figure-caption text-center">This schedule is marked as "adjusted" for Spirit events</figcaption>
     </figure>
 </center>
