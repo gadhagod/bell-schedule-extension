@@ -7,4 +7,4 @@
 * Open source
 
 Example look: \
-<img src="../assets/example_look.png">
+<img src="assets/example_look.png">
