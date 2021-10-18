@@ -12,4 +12,4 @@ How the extension looks as of now: \
 * No private data access
 
 ## Documentation
-[](https://gadhagod.github.io/bell-schedule-extension)
+See [here](https://gadhagod.github.io/bell-schedule-extension).
