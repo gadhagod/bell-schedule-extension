@@ -13,7 +13,7 @@
 
 <center>
     <h1><b>Harker Bell Schedule Extension</b></h1>
-    A chrome extension that displays the your schedules.<br>
+    A chrome extension that displays the your school schedule.<br>
 </center>
 
 [](docs/features.md ':include')
