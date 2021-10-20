@@ -32,5 +32,6 @@ jobs:
     - name: Push to dist branch
       uses: ad-m/github-push-action@master
       with: 
+        directory: dist
         branch: dist
         github_token: ${{ secrets.GITHUB_TOKEN }}
