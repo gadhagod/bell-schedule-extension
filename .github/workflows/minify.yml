@@ -10,5 +10,28 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-    - name: Test echo
-      run: echo hi
+    - uses: actions/checkout@v2
+    - name: Remove .git
+      run: rm -rf .git
+    - name: Install dependencies
+      run: npm i -g uglify-js
+    - name: Clone dist branch
+      run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist dist
+    - name: Copy HTML and CSS
+      run: cp -r popup/* dist
+    - name: Minify javascript
+      run: uglifyjs dist/index.js -o dist/index.js
+    - name: Commit dist files
+      run: |
+        cd dist
+        git add .
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .
+        git commit -m "Minify"
+    - name: Push to dist branch
+      uses: ad-m/github-push-action@master
+      with: 
+        directory: dist
+        branch: dist
+        github_token: ${{ secrets.GITHUB_TOKEN }}
