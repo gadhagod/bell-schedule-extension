@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: npm i -g uglify-js
     - name: Clone dist branch
-      run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist
+      run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist dist
     - name: Copy HTML and CSS
       run: cp -r popup/* dist
     - name: Minify javascript
