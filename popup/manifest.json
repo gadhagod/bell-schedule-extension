@@ -3,8 +3,8 @@
     "version": "2.2.2",
     "description": "View a Harker bell schedule popup conveniently from Chrome",
     "browser_action": {
-        "default_popup": "popup/index.html",
-        "default_icon": "assets/icon.png"
+        "default_popup": "index.html",
+        "default_icon": "img/icon.png"
     },
     "permissions": [
         "storage"
