@@ -5,9 +5,10 @@ from pathlib import Path
 from sys import argv
 import utils
 
-extension_path = Path(__file__).parent.resolve().parent.resolve()
-manifest_path = join(extension_path, "manifest.json")
-package_path = join(extension_path, "package.json")
+root_path = join(Path(__file__).resolve().parent.resolve().parent.resolve())
+popup_path = join(root_path, "popup")
+manifest_path = join(popup_path, "manifest.json")
+package_path = join(root_path, "package.json")
 args = argv[1:]
 
 if(not args):
