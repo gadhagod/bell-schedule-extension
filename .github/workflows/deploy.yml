@@ -23,8 +23,8 @@ jobs:
     - name: Clone dist branch
       run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist dist
 
-    - name: Copy popup files
-      run: cp -r popup/* dist
+    - name: Copy source files
+      run: cp -r src/* dist
 
     - name: Minify javascript
       run: uglifyjs dist/index.js -o dist/index.js
