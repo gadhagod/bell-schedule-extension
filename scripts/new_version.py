@@ -6,8 +6,8 @@ from sys import argv
 import utils
 
 root_path = join(Path(__file__).resolve().parent.resolve().parent.resolve())
-popup_path = join(root_path, "popup")
-manifest_path = join(popup_path, "manifest.json")
+src_path = join(root_path, "src")
+manifest_path = join(src_path, "manifest.json")
 package_path = join(root_path, "package.json")
 args = argv[1:]
 

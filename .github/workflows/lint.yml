@@ -2,7 +2,7 @@ name: Lint
 on: 
   push:
     paths:
-      - popup/*
+      - src/*
 jobs: 
   main:
     runs-on: ubuntu-latest
@@ -11,4 +11,4 @@ jobs:
     - name: Install dependencies
       run: npm i -g eslint
     - name: Lint files
-      run: eslint popup --ext .js
+      run: eslint src --ext .js

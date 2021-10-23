@@ -4,6 +4,8 @@
   "description": "View a Harker bell schedule popup conveniently from Chrome",
   "main": "popup/index.html",
   "scripts": {
+    "install": "sh scripts/install-components.sh",
+    "new-version": "python3 scripts/new_version.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

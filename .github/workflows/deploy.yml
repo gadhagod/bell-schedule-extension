@@ -1,9 +1,9 @@
-name: Minify
+name: Deploy
 on: 
   workflow_dispatch:
   push:
     paths:
-      - popup/*
+      - src/*
     branches:
       - master
 jobs: 
@@ -11,16 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: Remove .git
       run: rm -rf .git
+
     - name: Install dependencies
-      run: npm i -g uglify-js
+      run: |
+        npm i
+        npm i -g uglify-js
+
     - name: Clone dist branch
       run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist dist
-    - name: Copy HTML and CSS
+
+    - name: Copy popup files
       run: cp -r popup/* dist
+
     - name: Minify javascript
       run: uglifyjs dist/index.js -o dist/index.js
+
     - name: Commit dist files
       run: |
         cd dist
@@ -28,7 +36,8 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add .
-        git commit -m "Minify"
+        git commit -m "Deploy"
+
     - name: Push to dist branch
       uses: ad-m/github-push-action@master
       with: 

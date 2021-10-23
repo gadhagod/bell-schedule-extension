@@ -1,0 +1,21 @@
+{
+  "name": "bell-schedule-extension-docs",
+  "main": "index.js",
+  "homepage": "https://gadhagod.github.io/bell-schedule-extension",
+  "authors": [
+    "gadhagod"
+  ],
+  "description": "A chrome extension that displays the your school schedule.",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "showdown": "^1.9.1"
+  }
+}
