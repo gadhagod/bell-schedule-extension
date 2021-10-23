@@ -30,7 +30,7 @@ coverage
 .grunt
 
 # Bower dependency directory (https://bower.io/)
-popup/bower_components
+src/bower_components
 showdown.min.js
 
 # node-waf configuration
