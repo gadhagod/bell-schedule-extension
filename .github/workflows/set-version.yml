@@ -23,7 +23,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "Set version to ${{ github.event.inputs.version }}"
-    - name: Push motified config files
+    - name: Push modified config files
       uses: ad-m/github-push-action@master
       with: 
         github_token: ${{ secrets.GITHUB_TOKEN }}

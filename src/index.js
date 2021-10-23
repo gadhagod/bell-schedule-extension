@@ -82,29 +82,32 @@ function loadSchedule() {
         req.onreadystatechange = function() {
             if (this.readyState === 4) { // if response recieved
                 if (this.status === 200) { // if request is successful
-                    let res = JSON.parse(this.responseText); // convert response text to object
+                    (function(apiRes){
+                        let res = JSON.parse(apiRes.responseText); // convert response text to object
 
-                    if(!res.schedule[0] || res.schedule[0].name === "No School") {
-                        scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML to reflect absence of schedule
-                        return;
-                    }
-    
-                    header.innerHTML += `<br><small><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule</small>`; // add letter to header
-    
-                    res.schedule.forEach(period => { // for each period in the API response
-                        let tr = document.createElement("tr"); // create empty table row
-                        let td = document.createElement("td"); // create empty table data
-    
-                        // set the table data to custom period name or API's default period name followed by times
-                        td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>
-            ${parseTime(period.start)} - ${parseTime(period.end)}</center>`;
-                        if(periodStrings.includes(period.name)) { // if it's not a period (e.g. "lunch")
-                            td.setAttribute("class", "nonPeriod"); // set `class` to `nonPeriod` for seperate styling
+                        if(!res.schedule[0] || res.schedule[0].name === "No School") {
+                            scheduleTable.setAttribute("style", "border:none;"); // remove border from table
+                            scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML
+                            return;
                         }
-    
-                        tr.appendChild(td); // add the table data to the row
-                        scheduleTable.appendChild(tr); // add the row to the table
-                    });
+        
+                        header.innerHTML += `<br><small><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule</small>`; // add letter to header
+        
+                        res.schedule.forEach(period => { // for each period in the API response
+                            let tr = document.createElement("tr"); // create empty table row
+                            let td = document.createElement("td"); // create empty table data
+        
+                            // set the table data to custom period name or API's default period name followed by times
+                            td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>
+                ${parseTime(period.start)} - ${parseTime(period.end)}</center>`;
+                            if(periodStrings.includes(period.name)) { // if it's not a period (e.g. "lunch")
+                                td.setAttribute("class", "nonPeriod"); // set `class` to `nonPeriod` for seperate styling
+                            }
+        
+                            tr.appendChild(td); // add the table data to the row
+                            scheduleTable.appendChild(tr); // add the row to the table
+                        });
+                    })(this);
                 } else if (this.status === 404) { // if no schedule for the day
                     scheduleTable.setAttribute("style", "border:none;"); // remove border from table
                     scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML
