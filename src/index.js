@@ -276,17 +276,17 @@ submitSettingsButton.addEventListener("click", function() { // when the 'save' b
 newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the 'new release' button (from the settings screen) is pressed, change to the 'new release' screen
 settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, change to the settings screen
 settingsBackButton.addEventListener("click", setToScheduleScreen); // when the back button (from the settings screen) is pressed, change to the schedule screen
-newReleaseBackButton.addEventListener("click", setToSettingsScreen);
+newReleaseBackButton.addEventListener("click", setToSettingsScreen); // whne the back button from the new release screen is clicked, change to the settings screen
 
-document.onkeydown = function(event) {
-    if(event.keyCode === 38 || event.keyCode === 39) {
-        time.setDate(time.getDate() + 1);
-    } else if (event.keyCode === 37 || event.keyCode === 40) {
-        time.setDate(time.getDate() - 1);
-    } else {
-        return;
+document.onkeydown = function(event) { // when any key is pressed
+    if(event.keyCode === 38 || event.keyCode === 39) { // if the key pressed is the right or up arrow
+        time.setDate(time.getDate() + 1); // set the date one day forwards
+    } else if (event.keyCode === 37 || event.keyCode === 40) { // if the key pressed is the left or down arrow
+        time.setDate(time.getDate() - 1); // set the date when day backwards
+    } else { // if the key pressed is none of the arrow keys
+        return; // exit the function
     }
-    setToScheduleScreen();
+    setToScheduleScreen(); // re-render the schedule screen
 };
 
 setToScheduleScreen(); // start with the schedule screen activated
