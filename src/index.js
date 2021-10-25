@@ -148,7 +148,6 @@ function setToScheduleScreen() {
  * with `checkVersioning()`.
  */
 function setToSettingsScreen() {
-    document.body.style.width = "210px";
     scheduleTable.style.display = "none";
     settings.style.display = "none";
     newReleaseText.style.display = "none";
@@ -166,7 +165,6 @@ function setToSettingsScreen() {
  * about the new release.
  */
 function setToNewVersionScreen() {
-    document.body.style.width = "300px";
     scheduleTable.style.display = "none";
     settings.style.display = "none";
     settingsForm.style.display = "none";
@@ -183,8 +181,8 @@ function setToNewVersionScreen() {
             let latestReleaseNotes = markdownConverter.makeHtml(latestRelease.body); // convert the release notes from mardown to HTML
             newReleaseText.innerHTML = `A new version of the bell schedule extension is available. <br><br>
 <u>Published on ${parseDate(latestRelease.published_at)}</u>
-<b>${latestReleaseNotes}</b>
-Please remove this extension and install <b>v${latestRelease.name}</b> from <a href="https://github.com/${repo}/releases/latest" target="_blank">here</a>. <br><br>
+${latestReleaseNotes}
+Please remove this extension and install <u>v${latestRelease.name}</u> from <a href="https://github.com/${repo}/releases/latest" target="_blank">here</a>. <br><br>
 <small>NOTE: Updating extensions is highly recommended, as new features and fixes are implimemented.</small>`; // Tell the user info on the new version
         }
     };
