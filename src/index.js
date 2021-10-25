@@ -1,11 +1,6 @@
 const appDetails = chrome.app.getDetails();
 const repo = "gadhagod/bell-schedule-extension";
 
-var dayOffset = 0;
-if(appDetails.development) { // if extension not in production mode (check development.md)
-    dayOffset = appDetails.development.day_offset ?? 0; // check day offset
-}
-
 const req = new XMLHttpRequest();
 const time = new Date();
 // eslint-disable-next-line no-undef
@@ -74,10 +69,10 @@ function checkVersioning() {
  */
 function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
-    header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate() + dayOffset}`; // set header of page to have weekday and date
+    header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate()}`; // set header of page to have weekday and date
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
-        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate() + dayOffset}`; // url to be requested to
+        let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate()}`; // url to be requested to
 
         req.onreadystatechange = function() {
             if (this.readyState === 4) { // if response recieved
