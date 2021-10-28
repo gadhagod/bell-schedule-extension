@@ -38,3 +38,6 @@ Release notes can be found [here](https://github.com/gadhagod/bell-schedule-exte
 <img src="docs/img/src-code.png" style="border: 5px solid #555" length="42%" width="42%">
 
 <p id="release_notes">Latest release: </p>
+
+# Developing
+Developing setup and instructions can be found [here](https://github.com/gadhagod/bell-schedule-extension/blob/master/developing.md).
