@@ -54,4 +54,4 @@ Run locally:
 
     npm serve .
 
-Changes are auto-deployed when commited to `master` through GitHub pages.
+Changes are auto-deployed on releases through GitHub pages.
