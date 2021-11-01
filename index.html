@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        const req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if(this.readyState === 4 && this.status === 200) {
+                let latestRelease = JSON.parse(this.responseText);
+                window.location.replace(latestRelease.tag_name);
+            }
+        };
+        req.open("GET", "https://api.github.com/repos/gadhagod/bell-schedule-extension/releases/latest", true);
+        req.send();
+    </script>
+</html>
