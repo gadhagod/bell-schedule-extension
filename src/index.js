@@ -272,10 +272,16 @@ settingsBackButton.addEventListener("click", setToScheduleScreen); // when the b
 newReleaseBackButton.addEventListener("click", setToSettingsScreen); // whne the back button from the new release screen is clicked, change to the settings screen
 
 document.onkeydown = function(event) { // when any key is pressed
-    if(event.keyCode === 38 || event.keyCode === 39) { // if the key pressed is the right or up arrow
+    if(event.keyCode === 39) { // if the key pressed is the right arrow
         time.setDate(time.getDate() + 1); // set the date one day forwards
-    } else if (event.keyCode === 37 || event.keyCode === 40) { // if the key pressed is the left or down arrow
+    } else if (event.keyCode === 37) { // if the key pressed is the left arrow
         time.setDate(time.getDate() - 1); // set the date when day backwards
+    }
+    else if (event.keyCode === 38) { // if the key pressed is the up arrow
+        time.setDate(time.getDate() + 7); // set the date seven days forwards
+    }
+    else if (event.keyCode === 40) { // if the key pressed is the down arrow
+        time.setDate(time.getDate() - 7); // set the date seven days backwards
     } else { // if the key pressed is none of the arrow keys
         return; // exit the function
     }
