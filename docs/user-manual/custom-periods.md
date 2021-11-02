@@ -26,7 +26,7 @@ You can optionally input your classes' names, which show on your schedule instea
     <img src="docs/user-manual/img/custom-period/setting/after-custom-period.png" style="vertical-align: middle;" length="28%" width="28%">
 
 ### Removing Custom Periods
-1. Click <img src="../assets/settings.png" length="12" width="12">.
+1. Click <img src="assets/settings.png" length="12" width="12">.
 
     <img src="docs/user-manual/img/custom-period/removing/before.png" style="vertical-align: middle;" length="28%" width="28%">
     <span style="vertical-align: middle;">&#160;&#160;→&#160;&#160;</span>
