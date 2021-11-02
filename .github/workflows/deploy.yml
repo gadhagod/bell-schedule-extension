@@ -23,6 +23,12 @@ jobs:
     - name: Clone dist branch
       run: git clone https://github.com/gadhagod/bell-schedule-extension -b dist dist
 
+    - name: Install web components
+      run: sh scripts/install-components.sh
+
+    - name: Remove unnecessary files from source directory
+      run: rm src/bower.json
+
     - name: Copy source files
       run: cp -r src/* dist
 
