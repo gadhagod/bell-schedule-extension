@@ -23,17 +23,20 @@ jobs:
     - name: Copy source files
       run: |
         version="${{ github.event.release.tag_name }}"
+        if [ "$version" == "" ]; then version="${{ github.event.inputs.version }}"; fi
         mkdir "dist-docs/$version"
         rsync -aP --exclude dist-docs/ ./* "dist-docs/$version"
 
     - name: Commit new docs
       run: |
+        version="${{ github.event.release.tag_name }}"
+        if [ "$version" == "" ]; then version="${{ github.event.inputs.version }}"; fi
         cd dist-docs
         git add .
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add .
-        git commit -m "Build v$${{ github.event.release.tag_name }}" --allow-empty
+        git commit -m "Build v$version" --allow-empty
 
     - name: Push to docs branch
       uses: ad-m/github-push-action@master
