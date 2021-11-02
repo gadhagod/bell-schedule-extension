@@ -1,5 +1,5 @@
 ## Custom Periods
-You can optionally input your classes' names, which show on your schedule instead of period numbers, like so:
+You can optionally input your classes' names (referred to as "custom periods"), which show on your schedule instead of period numbers, like so:
 
 <center>
     <img src="docs/user-manual/img/custom-period/example-look.png">
