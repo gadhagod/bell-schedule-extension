@@ -52,6 +52,6 @@ Documentation is built through [Docsify](https://docsify.js.org).
 
 Run locally:
 
-    npm serve .
+    docsify serve .
 
-Changes are auto-deployed on releases through GitHub pages.
+Changes are automatically versioned and deployed on releases through GitHub pages by the [Build Docs](https://github.com/gadhagod/bell-schedule-extension/actions/workflows/docs.yml) workflow.
