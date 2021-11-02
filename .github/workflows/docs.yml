@@ -16,7 +16,7 @@ jobs:
 
     - name: Copy source files
       run: |
-        version="$${{ github.event.release.tag_name }}"
+        version="${{ github.event.release.tag_name }}"
         mkdir "dist-docs/$version"
         rsync -aP --exclude dist-docs/ ./* "dist-docs/$version"
 
