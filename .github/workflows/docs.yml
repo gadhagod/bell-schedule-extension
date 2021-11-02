@@ -1,5 +1,11 @@
 name: Build Docs
 on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: "Version number of new release"
+        default: 1.0.0
   release:
     types: [published]
 jobs: 
