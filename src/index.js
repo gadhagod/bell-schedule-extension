@@ -15,6 +15,8 @@ const settingsBackButton = document.getElementById("settingsBackButton");
 const newReleaseBackButton = document.getElementById("newReleaseBackButton");
 const newReleaseButton = document.getElementById("newReleaseButton");
 const newReleaseText = document.getElementById("newReleaseText");
+const noWifiImage = document.getElementById("noWifiImage");
+const noWifiText = document.getElementById("noWifiText");
 const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
 
@@ -107,7 +109,15 @@ function loadSchedule() {
                     scheduleTable.setAttribute("style", "border:none;"); // remove border from table
                     scheduleTable.innerHTML = "No school!"; // set the schedule table's HTML
                 } else { // if another kind of error occurred
-                    document.write("An error occured"); // tell the user by writing to screen
+                    if (!this.status) { // if the request was cancelled
+                        header.innerHTML = ""; // clear the header
+                        noWifiImage.style.display = "block"; // show the "no wifi" image
+                        noWifiText.innerHTML = "No internet connection"; // show the "no wifi" text
+                        settings.style.display = "none"; // hide the settings button
+                        scheduleTable.parentNode.removeChild(scheduleTable); // remove the schedule table
+                    } else {
+                        document.write("An error occured"); // tell the user by writing to screen
+                    }
                 }
                 loader.style.display = "none"; // hide the loader
             }
@@ -136,7 +146,6 @@ function setToScheduleScreen() {
     footer.style.display = "none";
     header.innerHTML = "";
     scheduleTable.style.display = "";
-    settings.style.display = "block";
     scheduleTable.setAttribute("style", ""); // add border to table
     loadSchedule();
 }
