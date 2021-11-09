@@ -71,7 +71,7 @@ function checkVersioning() {
  */
 function loadSchedule() {
     scheduleTable.innerHTML = ""; // replace old schedule
-    header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate()}`; // set header of page to have weekday and date
+    header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate()}` + (time.getFullYear() != new Date().getFullYear() ? `/${time.getFullYear() - 2000}` : ""); // set the header to contain the weekday, day of month, month, and year if not the current
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
         let url = `https://bell.dev.harker.org/api/schedule?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate()}`; // url to be requested to
