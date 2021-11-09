@@ -285,12 +285,10 @@ document.onkeydown = function(event) { // when any key is pressed
         time.setDate(time.getDate() + 1); // set the date one day forwards
     } else if (event.keyCode === 37) { // if the key pressed is the left arrow
         time.setDate(time.getDate() - 1); // set the date when day backwards
-    }
-    else if (event.keyCode === 38) { // if the key pressed is the up arrow
-        time.setDate(time.getDate() + 7); // set the date seven days forwards
-    }
-    else if (event.keyCode === 40) { // if the key pressed is the down arrow
-        time.setDate(time.getDate() - 7); // set the date seven days backwards
+    } else if (event.keyCode === 40) { // if the key pressed is the down arrow
+        time.setDate(time.getDate() + 7); // set the date seven days backwards
+    } else if (event.keyCode === 38) { // if the key pressed is the up arrow
+        time.setDate(time.getDate() - 7); // set the date seven days forwards
     } else { // if the key pressed is none of the arrow keys
         return; // exit the function
     }
