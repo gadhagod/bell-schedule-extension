@@ -1,6 +1,6 @@
 {
     "name": "Harker Bell Schedule",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "description": "View a Harker bell schedule popup conveniently from Chrome",
     "browser_action": {
         "default_popup": "index.html",
