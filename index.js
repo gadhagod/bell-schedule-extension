@@ -14,11 +14,12 @@ req.onreadystatechange = function() {
         document.getElementsByClassName("app-name")[0].appendChild((function() {
             let versionSelect = document.createElement("select");
             versionSelect.setAttribute("id", "versionSelect");
+            versionSelect.setAttribute("class", "form-select-sm");
             versionSelect.setAttribute("onchange", "versionChange()");
             for(let i = 0; i < releases.length; i++) {
                 if(parseInt(releases[i].tag_name.slice(0, 1)) >= 3 && releases[i].tag_name != "3.0.0") {
                     let option = document.createElement("option");
-                    option.innerHTML = `<p>${releases[i].tag_name}</p>`;
+                    option.innerHTML = `${releases[i].tag_name}`;
                     versionSelect.appendChild(option);
                 }
             }
