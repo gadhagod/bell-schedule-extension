@@ -2,7 +2,8 @@ const markdownConverter = new showdown.Converter();
 const req = new XMLHttpRequest();
 
 function versionChange() {
-    window.location.replace(`${window.location.origin}/${window.location.pathname.split("/").slice(1, -2) || ""}/${document.getElementById("versionSelect").value}`);
+    let params = new URLSearchParams(window.location.hash.split("/")[1]);
+    window.location.replace(`${window.location.origin}/${window.location.pathname.split("/").slice(1, -2) || ""}/${document.getElementById("versionSelect").value}#?${params.toString()}`);
 }
 
 req.onreadystatechange = function() {
