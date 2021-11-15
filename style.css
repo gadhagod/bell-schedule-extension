@@ -17,6 +17,13 @@ small.removeCustomPeriod {
 .nonPeriod {
     color: blue;
 }
+.lunchButton {
+    font-size: 11px; 
+    color: black;
+}
+.lunchButton:hover {
+    color: blue;
+}
 #loader {
     border: 10px solid rgba(0, 0, 0, 0.061);
     border-top: 10px solid blue;
