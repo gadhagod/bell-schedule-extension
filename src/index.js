@@ -226,7 +226,7 @@ function parseDate(ISODateTime) {
 }
 
 /**
- * Converts an int from 0 - 7 to the respective weekday, starting from Sunday representing 0
+ * Converts an int from 0 - 6 to the respective weekday, starting from Sunday representing 0
  * @param { 0 | 1 | 2 | 3 | 4 | 5 | 6} dayNumber
  * @returns {"Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"}
  */
