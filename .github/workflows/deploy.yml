@@ -42,7 +42,9 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add .
-        git commit -m "${{ github.event.head_commit.message }}" --allow-empty --allow-empty-message
+        git commit -m "${{ github.event.head_commit.message }}
+        
+Deploys $GITHUB_SHA" --allow-empty --allow-empty-message
 
     - name: Push to dist branch
       uses: ad-m/github-push-action@master
