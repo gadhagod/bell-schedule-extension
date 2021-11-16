@@ -9,6 +9,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: npm i -g eslint
+      run: |
+        npm i -g eslint
+        npm i
     - name: Lint files
       run: eslint src --ext .js
