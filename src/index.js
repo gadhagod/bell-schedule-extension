@@ -24,7 +24,7 @@ const loader = document.getElementById("loader");
  * @returns {{P1: null, P2: null, P3: null, P4: null, P5: null, P6: null, P7: null}}
  */
 function getEmptyPeriodNames() {
-    return Object.assign({
+    return {
         P1: null,
         P2: null,
         P3: null,
@@ -32,7 +32,7 @@ function getEmptyPeriodNames() {
         P5: null,
         P6: null,
         P7: null
-    });
+    };
 }
 
 /**
