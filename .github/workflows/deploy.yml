@@ -49,4 +49,5 @@ jobs:
       with: 
         directory: dist
         branch: dist
+        force: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
