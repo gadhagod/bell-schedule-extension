@@ -3,7 +3,6 @@ const repo = "gadhagod/bell-schedule-extension";
 
 const req = new XMLHttpRequest();
 const time = new Date();
-// eslint-disable-next-line no-undef
 const markdownConverter = new showdown.Converter();
 
 const header = document.getElementById("header");

@@ -29,5 +29,8 @@
         "no-extra-parens": "error",
         "no-unreachable-loop": "error"
     },
-    "ignorePatterns": ["**/bower_components/**", "**/showdown.min.js"]
+    "ignorePatterns": ["**/bower_components/**", "**/showdown.min.js"],
+    "plugins": [
+        "@types/showdown"
+    ]
 }
