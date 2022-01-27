@@ -118,6 +118,7 @@ function loadSchedule() {
                         document.write("An error occured"); // tell the user by writing to screen
                     }
                 }
+                settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, change to the settings screen
                 loader.style.display = "none"; // hide the loader
             }
         };
@@ -275,7 +276,6 @@ submitSettingsButton.addEventListener("click", function() { // when the 'save' b
 });
 
 newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the 'new release' button (from the settings screen) is pressed, change to the 'new release' screen
-settings.addEventListener("click", setToSettingsScreen); // when the settings button is pressed, change to the settings screen
 settingsBackButton.addEventListener("click", setToScheduleScreen); // when the back button (from the settings screen) is pressed, change to the schedule screen
 newReleaseBackButton.addEventListener("click", setToSettingsScreen); // whne the back button from the new release screen is clicked, change to the settings screen
 
