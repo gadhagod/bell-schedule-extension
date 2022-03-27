@@ -7,6 +7,7 @@ How the extension looks as of now: \
 ## Features
 * 100% up-to-date and reliable
 * Allows custom period names
+* Shows lunches
 * Shows special and modified schedules
 * Opens in popup
 * No private data access

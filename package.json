@@ -5,6 +5,7 @@
   "main": "src/index.html",
   "scripts": {
     "install": "sh scripts/install-components.sh",
+    "lint": "eslint src --ext .js",
     "new-version": "python3 scripts/new_version.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

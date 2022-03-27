@@ -11,6 +11,7 @@ const settings = document.getElementById("settings");
 const settingsForm = document.getElementById("settingsForm");
 const submitSettingsButton = document.getElementById("submitSettingsButton");
 const settingsBackButton = document.getElementById("settingsBackButton");
+const lunchBackButton = document.getElementById("lunchBackButton");
 const newReleaseBackButton = document.getElementById("newReleaseBackButton");
 const newReleaseButton = document.getElementById("newReleaseButton");
 const newReleaseText = document.getElementById("newReleaseText");
@@ -18,6 +19,7 @@ const noWifiImage = document.getElementById("noWifiImage");
 const noWifiText = document.getElementById("noWifiText");
 const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
+const lunchTable = document.getElementById("lunch");
 
 /**
  * Returns a copy of `emptyPeriodNames`
@@ -66,10 +68,10 @@ function checkVersioning() {
 }
 
 /**
- * Replaces table items with parsed data from API request.
+ * Replaces scheduleTable items with parsed data from API request.
  */
 function loadSchedule() {
-    scheduleTable.innerHTML = ""; // replace old schedule
+    scheduleTable.innerHTML = ""; // cleare old schedule
     header.innerHTML = `${parseWeekday(time.getDay())} ${time.getMonth()+1}/${time.getDate()}` + (time.getFullYear() != new Date().getFullYear() ? `/${time.getFullYear() - 2000}` : ""); // set the header to contain the weekday, day of month, month, and year if not the current
     chrome.storage.local.get(["periodNames"], function(res) { // get period names
         let periodNames = res.periodNames ?? getEmptyPeriodNames(); // if no custom period names are stored, assign them nulls
@@ -90,18 +92,24 @@ function loadSchedule() {
                         header.innerHTML += `<br><small><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule</small>`; // add letter to header
         
                         res.schedule.forEach(period => { // for each period in the API response
+                            let periodIsFirstLunch = period.name.toLowerCase() === "lunch" && !scheduleTable.innerHTML.includes("lunch"); // see if current period is the first occurance of lunch today
                             let tr = document.createElement("tr"); // create empty table row
                             let td = document.createElement("td"); // create empty table data
-        
+
                             // set the table data to custom period name or API's default period name followed by times
-                            td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>
-                ${parseTime(period.start)} - ${parseTime(period.end)}</center>`;
+                            td.innerHTML = `<center><b>${periodNames[period.name] ?? period.name}</b>${
+                                periodIsFirstLunch ? " <a class='lunchButton' href='#'>&#x2197;</a>" : ""
+                            } ${parseTime(period.start)} - ${parseTime(period.end)}</center>`; // if the period is lunch, add a link
                             if(periodStrings.includes(period.name)) { // if it's not a period (e.g. "lunch")
                                 td.setAttribute("class", "nonPeriod"); // set `class` to `nonPeriod` for seperate styling
                             }
-        
+
                             tr.appendChild(td); // add the table data to the row
                             scheduleTable.appendChild(tr); // add the row to the table
+
+                            if(periodIsFirstLunch) { // if this is the first lunch in the day
+                                document.querySelector(".lunchButton").addEventListener("click", setToLunchScreen); // when the link is clicked open the lunch view
+                            }
                         });
                     })(this);
                 } else if (this.status === 404) { // if no schedule for the day
@@ -129,6 +137,42 @@ function loadSchedule() {
 }
 
 /**
+ * Replaces lunchTable items with parsed data from API request.
+ */
+ function loadLunch() {
+    lunchTable.innerHTML = ""; // clear old lunch table
+    let url = `https://bell.dev.harker.org/api/lunchmenu?year=${time.getFullYear()}&month=${time.getMonth()+1}&day=${time.getDate()}`;
+    req.onreadystatechange = function() {
+        if (this.readyState === 4) { // if response recieved
+            if (this.status === 200) { // if request is successful
+                lunch = JSON.parse(this.responseText).lunch; // parse JSON and get lunch key
+                lunch.forEach((item) => { // for each lunch location
+                    lunchTable.appendChild( // add row to lunchTable
+                        (() => {
+                            let row = document.createElement("tr"); // create empty table row
+                            let foodLocation = document.createElement("td"); // create empty td element
+                            foodLocation.innerHTML = `<b><center>${item.place}</center></b>`; // set the td's text to the item place
+                            let foodItem = document.createElement("td"); // create empty td element
+                            foodItem.innerHTML = item.food; // set new td's text to item's dish
+
+                            row.appendChild(foodLocation); // add food location
+                            row.appendChild(foodItem); // add dish to the row
+                            return row;
+                        })()
+                    );
+                });
+            } else if (this.status === 404) { // if no schedule for the day
+                lunchTable.setAttribute("style", "border:none"); // remove border from table
+                lunchTable.innerHTML = "Lunch menu unavailable today!"; // set the lunch table's HTML
+            }
+            loader.style.display = "none"; // hide loader
+        }
+    }
+    req.open("GET", url, true);
+    req.send();
+}
+
+/**
  * Changes the popup to the schedule screen by hiding and showing
  * elements and changing popup size, and then loads the schedule with
  * `loadSchedule()`.
@@ -139,7 +183,9 @@ function setToScheduleScreen() {
     scheduleTable.style.display = "";
     settings.style.display = "block";
     settingsForm.style.display = "none";
+    lunchTable.style.display = "none";
     settingsBackButton.style.display = "none";
+    lunchBackButton.style.display = "none";
     newReleaseButton.style.display = "none";
     newReleaseText.style.display = "none";
     newReleaseBackButton.style.display = "none";
@@ -148,6 +194,15 @@ function setToScheduleScreen() {
     scheduleTable.style.display = "";
     scheduleTable.setAttribute("style", ""); // add border to table
     loadSchedule();
+}
+
+function setToLunchScreen() {
+    loader.style.display = "block";
+    lunchTable.style.display = "block";
+    lunchBackButton.style.display = "block";
+    scheduleTable.style.display = "none";
+    settings.style.display = "none";
+    loadLunch();
 }
 
 /**
@@ -164,6 +219,7 @@ function setToSettingsScreen() {
     settingsBackButton.style.display = "block";
     header.innerHTML = "Settings";
     newReleaseBackButton.style.display = "none";
+    lunchBackButton.style.display = "none";
     footer.style.display = "block";
     checkVersioning();
 }
@@ -277,7 +333,8 @@ submitSettingsButton.addEventListener("click", function() { // when the 'save' b
 
 newReleaseButton.addEventListener("click", setToNewVersionScreen); // when the 'new release' button (from the settings screen) is pressed, change to the 'new release' screen
 settingsBackButton.addEventListener("click", setToScheduleScreen); // when the back button (from the settings screen) is pressed, change to the schedule screen
-newReleaseBackButton.addEventListener("click", setToSettingsScreen); // whne the back button from the new release screen is clicked, change to the settings screen
+lunchBackButton.addEventListener("click", setToScheduleScreen);
+newReleaseBackButton.addEventListener("click", setToSettingsScreen); // when the back button from the new release screen is clicked, change to the settings screen
 
 document.onkeydown = function(event) { // when any key is pressed
     if(event.keyCode === 39) { // if the key pressed is the right arrow

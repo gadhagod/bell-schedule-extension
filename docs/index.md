@@ -27,7 +27,7 @@
 
 [](docs/user-manual/schedule-variants.md ':include')
 
-[](docs/user-manual/days-off.md ':include')
+[](docs/user-manual/lunch.md ':include')
 
 [](docs/user-manual/installing-a-new-version.md ':include')
 
