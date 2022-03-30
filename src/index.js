@@ -92,7 +92,7 @@ function loadSchedule() {
                         header.innerHTML += `<br><small><span style="color:green">${(toTitleCase(res.variant) ?? "") + " "}</span>${res.code} Schedule</small>`; // add letter to header
         
                         res.schedule.forEach(period => { // for each period in the API response
-                            let periodIsFirstLunch = period.name.toLowerCase() === "lunch" && !scheduleTable.innerHTML.includes("lunch"); // see if current period is the first occurance of lunch today
+                            let periodIsFirstLunch = period.name.toLowerCase().includes("lunch") && !scheduleTable.innerHTML.includes("lunch"); // see if current period is the first occurance of lunch today
                             let tr = document.createElement("tr"); // create empty table row
                             let td = document.createElement("td"); // create empty table data
 
