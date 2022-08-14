@@ -20,6 +20,7 @@ const noWifiText = document.getElementById("noWifiText");
 const footer = document.getElementById("footer");
 const loader = document.getElementById("loader");
 const lunchTable = document.getElementById("lunch");
+const copyrightYear = document.getElementById("copyrightYear");
 
 /**
  * Returns a copy of `emptyPeriodNames`
@@ -352,3 +353,5 @@ document.onkeydown = function(event) { // when any key is pressed
 };
 
 setToScheduleScreen(); // start with the schedule screen activated
+
+copyrightYear.innerHTML = time.getFullYear(); // set copyright year
