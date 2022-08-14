@@ -1,0 +1,29 @@
+{
+  "name": "bell-schedule-extension",
+  "version": "3.2.1",
+  "description": "View a Harker bell schedule popup conveniently from Chrome",
+  "main": "src/index.html",
+  "scripts": {
+    "install": "sh scripts/install-components.sh",
+    "lint": "eslint src --ext .js",
+    "new-version": "python3 scripts/new_version.py",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gadhagod/bell-schedule-extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gadhagod/bell-schedule-extension/issues"
+  },
+  "homepage": "https://github.com/gadhagod/bell-schedule-extension#readme",
+  "devDependencies": {
+    "@types/showdown": "^1.9.4",
+    "bower": "^1.8.12",
+    "eslint": "^7.32.0",
+    "uglify-js": "^3.14.2"
+  }
+}

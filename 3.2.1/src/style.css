@@ -1,0 +1,38 @@
+b {
+    font-size: larger;
+}
+body {
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.061)
+}
+table, th, td {
+    border: 1px solid black;
+}
+small.removeCustomPeriod {
+    color: red;
+}
+.startHidden {
+    display: none;
+}
+.nonPeriod {
+    color: blue;
+}
+.lunchButton {
+    font-size: 11px; 
+    color: black;
+}
+.lunchButton:hover {
+    color: blue;
+}
+#loader {
+    border: 10px solid rgba(0, 0, 0, 0.061);
+    border-top: 10px solid blue;
+    border-radius: 10%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
